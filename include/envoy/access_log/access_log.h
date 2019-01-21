@@ -4,7 +4,6 @@
 #include <string>
 
 #include "envoy/common/pure.h"
-
 #include "envoy/filesystem/filesystem.h"
 #include "envoy/http/header_map.h"
 #include "envoy/stream_info/stream_info.h"
@@ -42,8 +41,7 @@ public:
    * Evaluate whether an access log should be written based on request and response data.
    * @return TRUE if the log should be written.
    */
-  virtual bool evaluate(const StreamInfo::StreamInfo& info,
-                        const Http::HeaderMap& request_headers,
+  virtual bool evaluate(const StreamInfo::StreamInfo& info, const Http::HeaderMap& request_headers,
                         const Http::HeaderMap& response_trailers) PURE;
 };
 
