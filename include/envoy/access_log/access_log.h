@@ -4,6 +4,7 @@
 #include <string>
 
 #include "envoy/common/pure.h"
+
 #include "envoy/filesystem/filesystem.h"
 #include "envoy/http/header_map.h"
 #include "envoy/stream_info/stream_info.h"
@@ -42,7 +43,8 @@ public:
    * @return TRUE if the log should be written.
    */
   virtual bool evaluate(const StreamInfo::StreamInfo& info,
-                        const Http::HeaderMap& request_headers) PURE;
+                        const Http::HeaderMap& request_headers,
+                        const Http::HeaderMap& response_trailers) PURE;
 };
 
 typedef std::unique_ptr<Filter> FilterPtr;

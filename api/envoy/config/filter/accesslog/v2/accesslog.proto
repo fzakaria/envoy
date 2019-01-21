@@ -70,6 +70,9 @@ message AccessLogFilter {
 
     // Response flag filter.
     ResponseFlagFilter response_flag_filter = 9;
+
+    // Grpc status code filter.
+    GrpcStatusCodeFilter grpc_status_code_filter = 10;
   }
 }
 
@@ -187,4 +190,11 @@ message ResponseFlagFilter {
       "URX"
     ]
   }];
+}
+
+// Filters on Grpc status code.
+// https://github.com/grpc/grpc/blob/master/doc/statuscodes.md
+message GrpcStatusCodeFilter {
+  // Comparison.
+  ComparisonFilter comparison = 1 [(validate.rules).message.required = true];
 }

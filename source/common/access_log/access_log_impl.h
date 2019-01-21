@@ -52,7 +52,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
@@ -66,7 +67,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
@@ -92,7 +94,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
@@ -105,7 +108,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
@@ -117,7 +121,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
@@ -127,7 +132,8 @@ class TraceableRequestFilter : public Filter {
 public:
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
@@ -140,7 +146,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 
 private:
   Runtime::Loader& runtime_;
@@ -159,7 +166,8 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 
 private:
   std::vector<Http::HeaderUtility::HeaderData> header_data_;
@@ -174,10 +182,26 @@ public:
 
   // AccessLog::Filter
   bool evaluate(const StreamInfo::StreamInfo& info,
-                const Http::HeaderMap& request_headers) override;
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 
 private:
   uint64_t configured_flags_{};
+};
+
+/**
+ * Filter on GRPC response status code.
+ */
+class GrpcStatusCodeFilter : public ComparisonFilter {
+public:
+  GrpcStatusCodeFilter(const envoy::config::filter::accesslog::v2::GrpcStatusCodeFilter& config,
+                   Runtime::Loader& runtime)
+      : ComparisonFilter(config.comparison(), runtime) {}
+
+  // AccessLog::Filter
+  bool evaluate(const StreamInfo::StreamInfo& info,
+                const Http::HeaderMap& request_headers,
+                const Http::HeaderMap& respone_trailers) override;
 };
 
 /**
